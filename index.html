@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Be My Valentine 💖</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffe6ef;
+      --accent: #ff4d88;
+      --text: #3a2a2a;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: radial-gradient(1200px 800px at 50% 0%, #fff0f6 0%, var(--bg) 60%, #ffd9e8 100%);
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Hearts */
+    .hearts { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+    .heart {
+      position: absolute; width: 18px; height: 18px; transform: rotate(45deg);
+      animation: floatUp linear forwards;
+    }
+    .heart::before, .heart::after {
+      content: ""; position: absolute; width: 100%; height: 100%;
+      background: inherit; border-radius: 50%;
+    }
+    .heart::before { left: -50%; }
+    .heart::after { top: -50%; }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(45deg) scale(0.9); opacity: 0; }
+      10% { opacity: 0.9; }
+      100% { transform: translateY(-120vh) rotate(45deg) scale(1.2); opacity: 0; }
+    }
+
+    .container {
+      position: relative; z-index: 1; height: 100%;
+      display: grid; place-items: center; padding: 20px; text-align: center;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 40px 20px;
+      max-width: 450px;
+      width: 100%;
+      min-height: 480px;
+      box-shadow: 0 10px 30px rgba(255, 77, 136, 0.2);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .script { font-family: 'Parisienne', cursive; font-size: 42px; color: var(--accent); margin: 0; }
+    .title { font-weight: 700; font-size: 24px; margin: 10px 0; }
+
+    .btn-area {
+      position: relative;
+      height: 160px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      border: none;
+      position: absolute;
+      transition: all 0.15s ease-out;
+    }
+
+    #yesBtn {
+      background: var(--accent); color: white;
+      left: 50%; top: 20px; transform: translateX(-110%);
+      z-index: 100;
+    }
+
+    #noBtn {
+      background: #eeeeee; color: #666;
+      left: 50%; top: 20px; transform: translateX(10%);
+    }
+
+    .hidden { display: none !important; }
+    
+    .view-screen {
+      display: flex; flex-direction: column; align-items: center; gap: 15px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .gif-wrap {
+      width: 100%;
+      max-width: 280px;
+      /* Changed height to min-height or auto to be more flexible */
+      min-height: 200px; 
+      background: transparent; 
+      border-radius: 15px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+    }
+
+    .gif-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+
+  <div class="container">
+    <div class="card" id="card">
+      
+      <div id="askScreen" class="view-screen">
+        <h2 class="script">Hey love,</h2>
+        <h1 class="title">Will you be my luvluv? 💖</h1>
+        <div class="btn-area" id="btnArea">
+          <button class="btn" id="yesBtn">Yes</button>
+          <button class="btn" id="noBtn">No</button>
+        </div>
+      </div>
+
+      <div id="angryScreen" class="view-screen hidden">
+        <h1 class="title">U will susu ur bed 😡😢😒😱🤬🤮🤡👿</h1>
+        <div class="gif-wrap">
+          <img id="angryGif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcm5oem0wNmhvdmdveGpxbDVvMWEwanByZG9ub2IxdDM4d3A5c21kdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bcqAMUTUHoLDy/giphy.gif" 
+               onerror="this.style.display='none'; this.parentElement.innerHTML='😡';">
+        </div>
+        <p>U big dumdum.</p>
+        <button class="btn" style="position:relative; transform:none; left:0; top:0; background:var(--accent); color:white;" onclick="resetApp()">Try Again</button>
+      </div>
+
+      <div id="successScreen" class="view-screen hidden">
+        <h1 class="title">Good boi 🤤👅🥰😘</h1>
+        <div class="gif-wrap">
+          <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjBxcnFpNjMwYW9uOHB2OHNiNThraHdkbzhqbTF6ZzlzdHl2Znc1cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ytu2GUYbvhz7zShGwS/giphy.gif" 
+               onerror="this.style.display='none'; this.parentElement.innerHTML='🥰';">
+        </div>
+        <p>See u on 8th! Will pick u up, look pretty for me XOXO.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const askScreen = document.getElementById('askScreen');
+    const angryScreen = document.getElementById('angryScreen');
+    const successScreen = document.getElementById('successScreen');
+    const card = document.getElementById('card');
+
+    let escapes = 0;
+    const maxEscapes = 3;
+
+    function moveButton(e) {
+      if (escapes < maxEscapes) {
+        // Prevent clicking it if it's still running away
+        if(e) e.preventDefault();
+
+        const cardWidth = card.clientWidth;
+        const cardHeight = card.clientHeight;
+        const btnWidth = yesBtn.clientWidth;
+        const btnHeight = yesBtn.clientHeight;
+
+        // Keep button inside card boundaries
+        const newX = Math.random() * (cardWidth - btnWidth - 40) + 20;
+        const newY = Math.random() * (cardHeight - btnHeight - 150) + 40;
+
+        yesBtn.style.left = newX + 'px';
+        yesBtn.style.top = newY + 'px';
+        yesBtn.style.transform = 'none';
+        
+        escapes++;
+      }
+    }
+
+    // Move on hover or touch
+    yesBtn.addEventListener('mouseover', moveButton);
+    yesBtn.addEventListener('touchstart', moveButton);
+
+    // Final click logic
+    yesBtn.addEventListener('click', (e) => {
+      if (escapes >= maxEscapes) {
+        askScreen.classList.add('hidden');
+        successScreen.classList.remove('hidden');
+        for (let i = 0; i < 40; i++) setTimeout(spawnHeart, i * 50);
+      } else {
+        moveButton(e);
+      }
+    });
+
+    // No button logic
+    noBtn.addEventListener('click', () => {
+      askScreen.classList.add('hidden');
+      angryScreen.classList.remove('hidden');
+    });
+
+    function resetApp() {
+      escapes = 0;
+      yesBtn.style.left = '50%';
+      yesBtn.style.top = '20px';
+      yesBtn.style.transform = 'translateX(-110%)';
+      angryScreen.classList.add('hidden');
+      askScreen.classList.remove('hidden');
+    }
+
+    // Background hearts
+    function spawnHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.background = ['#ff4d88', '#ff6fa3', '#ff85b3'][Math.floor(Math.random()*3)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.bottom = '-20px';
+      heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(spawnHeart, 400);
+  </script>
+</body>
+</html>
